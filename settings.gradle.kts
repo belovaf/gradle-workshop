@@ -1,3 +1,7 @@
 rootProject.name = "gradle-workshop"
 
-include("consumer", "producer")
+include(
+    "consumer",
+    "producer",
+    "spring-app",
+)

@@ -1,5 +1,5 @@
 plugins {
-    id("workshop.java-convention")
+    workshop.`java-convention`
 }
 
 dependencies {
