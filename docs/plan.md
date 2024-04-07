@@ -46,6 +46,9 @@ Gradle build lifecycle
   - AttributeCompatibilityRule for version and library elements
   - ?secondary variants
 
+- Shared build services
+  - timestamp build service
+
 - Convention plugins, reuse build configuration
   - capabilities vs conventions
   - opinionated java library plugin

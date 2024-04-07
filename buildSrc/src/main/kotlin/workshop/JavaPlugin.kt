@@ -20,6 +20,7 @@ import workshop.attributes.JavaVersionCompatibilityRule
 import workshop.attributes.LibraryElementsCompatibilityRules
 import workshop.attributes.TargetJvmEnvironmentDisambiguationRule
 import workshop.attributes.attr
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class JavaPlugin @Inject constructor(
@@ -29,7 +30,9 @@ class JavaPlugin @Inject constructor(
     override fun apply(project: Project) = with(project) {
         apply<BasePlugin>()
 
-        val timestampService = gradle.sharedServices.registerIfAbsent("timestamp", TimestampBuildService::class)
+        val timestampService = gradle.sharedServices.registerIfAbsent("timestamp", TimestampBuildService::class) {
+            parameters.format.set("yyyy-MM-dd HH:mm:ss")
+        }
 
         val ext = extensions.create("java", JavaPluginExtension::class.java)
 
@@ -93,7 +96,7 @@ class JavaPlugin @Inject constructor(
             destinationDirectory.set(layout.buildDirectory.dir("libs"))
             usesService(timestampService)
             manifest {
-                attributes["Timestamp"] = timestampService.get().timestamp
+                attributes["Timestamp"] = timestampService.get().timestampString
             }
         }
 
