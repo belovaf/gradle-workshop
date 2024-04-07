@@ -11,10 +11,11 @@ import org.gradle.api.attributes.java.TargetJvmVersion
 import org.gradle.api.component.SoftwareComponentFactory
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.JavaExec
-import org.gradle.jvm.tasks.Jar
+import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.registerIfAbsent
 import workshop.attributes.JavaVersionCompatibilityRule
 import workshop.attributes.LibraryElementsCompatibilityRules
 import workshop.attributes.TargetJvmEnvironmentDisambiguationRule
@@ -27,6 +28,8 @@ class JavaPlugin @Inject constructor(
 
     override fun apply(project: Project) = with(project) {
         apply<BasePlugin>()
+
+        val timestampService = gradle.sharedServices.registerIfAbsent("timestamp", TimestampBuildService::class)
 
         val ext = extensions.create("java", JavaPluginExtension::class.java)
 
@@ -88,6 +91,10 @@ class JavaPlugin @Inject constructor(
         val jarTask = tasks.register("jar", Jar::class.java) {
             from(compileTask.map { it.classesDir })
             destinationDirectory.set(layout.buildDirectory.dir("libs"))
+            usesService(timestampService)
+            manifest {
+                attributes["Timestamp"] = timestampService.get().timestamp
+            }
         }
 
         tasks.named("assemble") {
