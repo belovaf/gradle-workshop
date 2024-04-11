@@ -6,11 +6,7 @@ import org.gradle.api.Project
 import org.gradle.api.attributes.Usage
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.*
 
 /**
  * Пример convention-плагина.
@@ -18,8 +14,8 @@ import org.gradle.kotlin.dsl.get
  */
 class JavaConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) = target.run {
-        apply<JavaPlugin>()
-        apply<MavenPublishPlugin>()
+        apply(plugin = "workshop.java")
+        apply(plugin = "maven-publish")
 
         extensions.configure<JavaPluginExtension> {
             withSourcesJar()
@@ -38,5 +34,11 @@ class JavaConventionPlugin : Plugin<Project> {
                 }
             }
         }
+
+        tasks.withType<CompileTask> {
+            compilerArgs.add("-parameters")
+        }
+
+        Unit
     }
 }

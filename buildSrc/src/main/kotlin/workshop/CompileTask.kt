@@ -1,16 +1,19 @@
 package workshop
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.JavaVersion
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.ProjectLayout
+import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
+import org.gradle.process.ExecOperations
 import java.io.File
 import javax.inject.Inject
 
 @CacheableTask
-abstract class CompileTask : AbstractExecTask<CompileTask>(CompileTask::class.java) {
+abstract class CompileTask : DefaultTask() {
 
     @get:InputDirectory
     @get:SkipWhenEmpty
@@ -24,41 +27,40 @@ abstract class CompileTask : AbstractExecTask<CompileTask>(CompileTask::class.ja
     @get:Input
     abstract val release: Property<JavaVersion>
 
+    @get:Optional
+    @get:Input
+    abstract val compilerArgs: ListProperty<String>
+
     @get:OutputDirectory
     abstract val classesDir: DirectoryProperty
 
     @get:Inject
-    abstract val layout: ProjectLayout
+    protected abstract val layout: ProjectLayout
+
+    @get:Inject
+    protected abstract val exec: ExecOperations
 
     init {
         group = "build"
     }
 
     @TaskAction
-    override fun exec() {
-        executable = "javac"
-        setArgs(buildArgs())
-        super.exec()
-    }
+    fun exec() {
+        val result = exec.exec {
+            executable("javac")
 
-    private fun buildArgs(): List<String> = buildList {
-        release.orNull?.let {
-            add("--release")
-            add(it.toString())
+            args(compilerArgs.get())
+            release.orNull?.let {
+                args("--release", it.toString())
+            }
+            args("--source-path", sourcePath.get().asFile.toProjectRelativeString())
+            args("-d", classesDir.get().asFile.toProjectRelativeString())
+            if (!classPath.isEmpty) {
+                args("--class-path", classPath.asPath)
+            }
+            args(sourcePath.asFileTree.map { it.toProjectRelativeString() })
         }
-
-        add("--source-path")
-        add(sourcePath.get().asFile.toProjectRelativeString())
-
-        add("-d")
-        add(classesDir.get().asFile.toProjectRelativeString())
-
-        if (!classPath.isEmpty) {
-            add("--class-path")
-            add(classPath.asPath)
-        }
-
-        sourcePath.asFileTree.mapTo(this) { it.toProjectRelativeString() }
+        result.rethrowFailure()
     }
 
     private fun File.toProjectRelativeString(): String = toRelativeString(layout.projectDirectory.asFile)

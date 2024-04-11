@@ -12,10 +12,7 @@ import org.gradle.api.component.SoftwareComponentFactory
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.registerIfAbsent
+import org.gradle.kotlin.dsl.*
 import workshop.attributes.JavaVersionCompatibilityRule
 import workshop.attributes.LibraryElementsCompatibilityRules
 import workshop.attributes.TargetJvmEnvironmentDisambiguationRule
@@ -34,18 +31,18 @@ class JavaPlugin @Inject constructor(
             parameters.format.set("yyyy-MM-dd HH:mm:ss")
         }
 
-        val ext = extensions.create("java", JavaPluginExtension::class.java)
+        val ext = extensions.create<JavaPluginExtension>("java")
 
         dependencies {
             attributesSchema {
                 attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE) {
-                    compatibilityRules.add(JavaVersionCompatibilityRule::class.java)
+                    compatibilityRules.add(JavaVersionCompatibilityRule::class)
                 }
                 attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE) {
-                    compatibilityRules.add(LibraryElementsCompatibilityRules::class.java)
+                    compatibilityRules.add(LibraryElementsCompatibilityRules::class)
                 }
                 attribute(TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE) {
-                    disambiguationRules.add(TargetJvmEnvironmentDisambiguationRule::class.java)
+                    disambiguationRules.add(TargetJvmEnvironmentDisambiguationRule::class)
                 }
             }
         }
@@ -84,14 +81,14 @@ class JavaPlugin @Inject constructor(
             }
         }
 
-        val compileTask = tasks.register("compile", CompileTask::class.java) {
+        val compileTask = tasks.register<CompileTask>("compile") {
             this.sourcePath.set(ext.sourcesDir)
             this.classPath.from(compileClasspath)
             this.classesDir.set(layout.buildDirectory.dir("classes/java/main"))
             this.release.set(ext.version)
         }
 
-        val jarTask = tasks.register("jar", Jar::class.java) {
+        val jarTask = tasks.register<Jar>("jar") {
             from(compileTask.map { it.classesDir })
             destinationDirectory.set(layout.buildDirectory.dir("libs"))
             usesService(timestampService)
