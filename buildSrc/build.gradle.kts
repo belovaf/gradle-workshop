@@ -12,9 +12,9 @@ gradlePlugin {
             id = "workshop.java"
             implementationClass = "workshop.JavaPlugin"
         }
-        create("java-convention") {
-            id = "workshop.java-convention"
-            implementationClass = "workshop.JavaConventionPlugin"
+        create("spring-boot") {
+            id = "workshop.spring-boot"
+            implementationClass = "workshop.SpringBootExtendedPlugin"
         }
     }
 }

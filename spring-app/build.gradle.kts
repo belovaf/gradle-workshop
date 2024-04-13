@@ -1,7 +1,8 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    workshop.`spring-convention`
+    java
+    workshop.`spring-boot`
 }
 
 dependencies {

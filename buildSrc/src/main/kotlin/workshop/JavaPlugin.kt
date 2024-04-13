@@ -24,7 +24,7 @@ class JavaPlugin @Inject constructor(
     private val softwareComponentFactory: SoftwareComponentFactory
 ) : Plugin<Project> {
 
-    override fun apply(project: Project) = with(project) {
+    override fun apply(project: Project) = project.run {
         apply(plugin = "base")
 
         val timestampService = gradle.sharedServices.registerIfAbsent("timestamp", TimestampBuildService::class) {

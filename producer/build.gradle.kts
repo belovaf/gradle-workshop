@@ -7,5 +7,5 @@ dependencies {
 }
 
 tasks.runMain {
-    mainClass = "workshop.Consumer"
+    mainClass = "workshop.Producer"
 }

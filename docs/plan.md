@@ -1,20 +1,44 @@
-### Теория
+## Теория
 
-Gradle roadmap
-- restrictive dsl (https://blog.gradle.org/declarative-gradle)
-- avoid code in build.gradle.kts
-  - bad example: https://github.com/spring-projects/spring-security/blob/main/build.gradle
-- use plugins, extensions
+- Declarative Gradle
+  - [gradle roadmap](https://github.com/orgs/gradle/projects/31/views/1)
+  - [restrictive dsl](https://blog.gradle.org/declarative-gradle)
+  - avoid code in build.gradle.kts
+    - bad examples:
+      - https://github.com/spring-projects/spring-kafka/blob/main/build.gradle
+      - https://github.com/spring-projects/spring-security/blob/main/build.gradle
+  - use plugins, extensions
 
-Gradle build lifecycle
-- ! minimize logic executed during the initialization and configuration phase
-- defer logic to the execution phase
+- Gradle build lifecycle
+  - [diagram](images/build-lifecycle.png)
+  - minimize logic executed during the initialization and configuration phase
+  - defer logic to the execution phase
 
-### Практика
+## Практика
+
+### Java Plugin
+
+#### Requirements
+- compilation
+- packaging to jar
+- customizations:
+  - java version
+  - sources directory location
+  - additional compiler arguments
+- consume dependencies, implementation scope
+- produce artifacts (other projects can consume our project as dependency)
+- transitive compile dependencies, api scope
+- produce sources jar
+- optimization: do not build jar when not needed
+- shared state: build timestamp
+
+#### Steps
 - Included builds, buildSrc
+
 - Base plugin
-  - lifecycle tasks
+  - lifecycle tasks (clean, check, assemble, build)
   - explicit task dependencies
+
 - Compilation without dependencies, build jar, run
   - configuration avoidance API (lazy configuration)
   - task inputs / outputs
@@ -29,51 +53,58 @@ Gradle build lifecycle
 - Consume artifacts, implementation, classpath
   - (Configurable)FileCollection
   - (Configurable)FileTree
+  - [file collection vs file tree diagram](images/file-collection-vs-file-tree.png)
   - Configuration: consumable, resolvable, dependencyScope
-  - PathSensitive
+  - input normalization
+    - PathSensitive
+    - Classpath
+    - content normalization, ABI, jar normalization
+    - filtering, build-info.properties
+  - [java library plugin configurations](images/java-library-plugin-configurations.png)
 
 - Produce artifacts, runtimeElements
+  - [maven component model](images/component-model-maven.png)
+  - [gradle component model](images/component-model-gradle.png)
   - components
   - outgoingVariants
   - attributes
 
 - JavaLibraryPlugin: api, compileClasspath, runtimeClasspath, apiElements
-  - transitive dependencies
+  - transitive dependencies: separate compile and runtime
   - compare with maven
 
 - Advanced produce artifacts
-  - java-doc variant
-  - AttributeCompatibilityRule for version and library elements
-  - ?secondary variants
+  - sources jar variant
+  - classes variant
+  - AttributeCompatibilityRule for java version and library elements
+  - AttributeDisambiguationRule for target jvm environment
 
 - Shared build services
   - timestamp build service
 
-- Convention plugins, reuse build configuration
-  - capabilities vs conventions
-  - opinionated java library plugin
+### Java Convention Plugin
 
-- SpringBootPlugin productionOnly
+#### Requirements
+- common compiler args
+- common publication logic
 
-- Разбор community plugins
+#### Steps
 
-- 
-### Advanced
-Incremental task inputs
-Parallel tasks with Worker API
+- Convention plugins
+- Precompiled script plugins
+- Separate capabilities from conventions
+  - JavaBasePlugin - capabilities
+  - JavaPlugin - conventions
 
+### Spring Boot productionOnly
 
-### ???
-Platforms, version catalogs
-Advanced testing capabilities
-Build services (version timestamp)
+#### Requirements
 
+- productionOnly dependency scope
 
-### Spring boot thin plugin
-Module - thin
- ov -> thin jar
- ov -> dependencies
+#### Steps
 
-distribution
-  module1
-  module2
+- build script dependency
+- spring boot plugin productionRuntimeClasspath
+- spring boot plugin bootJar
+- reacting on other plugins
