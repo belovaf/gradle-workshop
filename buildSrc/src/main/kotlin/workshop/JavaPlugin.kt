@@ -25,7 +25,7 @@ class JavaPlugin @Inject constructor(
 ) : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
-        apply<BasePlugin>()
+        apply(plugin = "base")
 
         val timestampService = gradle.sharedServices.registerIfAbsent("timestamp", TimestampBuildService::class) {
             parameters.format.set("yyyy-MM-dd HH:mm:ss")
