@@ -33,6 +33,11 @@ class JavaConventionPlugin : Plugin<Project> {
                     }
                 }
             }
+            repositories {
+                maven(rootProject.layout.projectDirectory.dir(".repository").asFile.absoluteFile) {
+                    name = "workshop-repo"
+                }
+            }
         }
 
         tasks.withType<CompileTask> {
