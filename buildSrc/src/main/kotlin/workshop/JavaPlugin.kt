@@ -9,7 +9,6 @@ import org.gradle.api.attributes.Usage
 import org.gradle.api.attributes.java.TargetJvmEnvironment
 import org.gradle.api.attributes.java.TargetJvmVersion
 import org.gradle.api.component.SoftwareComponentFactory
-import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.*
@@ -17,7 +16,6 @@ import workshop.attributes.JavaVersionCompatibilityRule
 import workshop.attributes.LibraryElementsCompatibilityRules
 import workshop.attributes.TargetJvmEnvironmentDisambiguationRule
 import workshop.attributes.attr
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class JavaPlugin @Inject constructor(
@@ -82,7 +80,7 @@ class JavaPlugin @Inject constructor(
         }
 
         val compileTask = tasks.register<CompileTask>("compile") {
-            this.sourcePath.set(ext.sourcesDir)
+            this.sourceDir.set(ext.sourcesDir)
             this.classPath.from(compileClasspath)
             this.classesDir.set(layout.buildDirectory.dir("classes/java/main"))
             this.release.set(ext.version)

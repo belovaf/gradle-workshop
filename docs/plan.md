@@ -47,8 +47,9 @@
   - caches
   - incremental builds, do not call clean
 
-- Java extension, sourceCompatibility, targetCompatibility
+- Java extension
   - extension DSL
+  - language version
 
 - Consume artifacts, implementation, classpath
   - (Configurable)FileCollection

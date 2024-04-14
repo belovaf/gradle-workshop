@@ -9,7 +9,7 @@ import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
 import org.gradle.process.ExecOperations
-import java.io.File
+import org.gradle.work.NormalizeLineEndings
 import javax.inject.Inject
 
 @CacheableTask
@@ -17,10 +17,12 @@ abstract class CompileTask : DefaultTask() {
 
     @get:InputDirectory
     @get:SkipWhenEmpty
+    @get:IgnoreEmptyDirectories
+    @get:NormalizeLineEndings
     @get:PathSensitive(PathSensitivity.RELATIVE)
-    abstract val sourcePath: DirectoryProperty
+    abstract val sourceDir: DirectoryProperty
 
-    @get:Classpath
+    @get:CompileClasspath
     abstract val classPath: ConfigurableFileCollection
 
     @get:Optional
@@ -53,15 +55,13 @@ abstract class CompileTask : DefaultTask() {
             release.orNull?.let {
                 args("--release", it.toString())
             }
-            args("--source-path", sourcePath.get().asFile.toProjectRelativeString())
-            args("-d", classesDir.get().asFile.toProjectRelativeString())
+            args("--source-path", sourceDir.get().asFile.path)
+            args("-d", classesDir.get().asFile.path)
             if (!classPath.isEmpty) {
                 args("--class-path", classPath.asPath)
             }
-            args(sourcePath.asFileTree.map { it.toProjectRelativeString() })
+            args(sourceDir.asFileTree.map { it.path })
         }
         result.rethrowFailure()
     }
-
-    private fun File.toProjectRelativeString(): String = toRelativeString(layout.projectDirectory.asFile)
 }
