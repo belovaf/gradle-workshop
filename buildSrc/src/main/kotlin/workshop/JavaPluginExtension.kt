@@ -13,6 +13,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
 import javax.inject.Inject
 
 abstract class JavaPluginExtension {
@@ -23,7 +24,7 @@ abstract class JavaPluginExtension {
     protected abstract val project: Project
 
     fun withSourcesJar() = project.run {
-        val sourcesJarTask = tasks.register("sourcesJar", Jar::class.java) {
+        val sourcesJarTask = tasks.register<Jar>("sourcesJar") {
             group = BUILD_GROUP
             from(sourcesDir)
             archiveClassifier.set("sources")

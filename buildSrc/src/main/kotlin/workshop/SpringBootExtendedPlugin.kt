@@ -6,7 +6,6 @@ import org.gradle.api.attributes.Attribute
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.withType
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
