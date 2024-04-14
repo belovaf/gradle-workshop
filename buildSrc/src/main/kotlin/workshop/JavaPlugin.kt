@@ -15,7 +15,6 @@ import org.gradle.kotlin.dsl.*
 import workshop.attributes.JavaVersionCompatibilityRule
 import workshop.attributes.LibraryElementsCompatibilityRules
 import workshop.attributes.TargetJvmEnvironmentDisambiguationRule
-import workshop.attributes.attr
 import javax.inject.Inject
 
 class JavaPlugin @Inject constructor(
@@ -54,10 +53,10 @@ class JavaPlugin @Inject constructor(
         val compileClasspath = configurations.resolvable("compileClasspath") {
             extendsFrom(implementation.get())
             attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.LIBRARY))
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_API))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, attr(LibraryElements.CLASSES))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_API))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.CLASSES))
                 attributeProvider(
                     TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
                     ext.version.map { it.majorVersion.toInt() },
@@ -68,10 +67,10 @@ class JavaPlugin @Inject constructor(
         val runtimeClasspath = configurations.resolvable("runtimeClasspath") {
             extendsFrom(implementation.get())
             attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.LIBRARY))
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_RUNTIME))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, attr(LibraryElements.CLASSES))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.CLASSES))
                 attributeProvider(
                     TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
                     ext.version.map { it.majorVersion.toInt() },
@@ -106,10 +105,10 @@ class JavaPlugin @Inject constructor(
         val apiElements = configurations.consumable("apiElements") {
             extendsFrom(api.get())
             attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.LIBRARY))
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_API))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, attr(LibraryElements.JAR))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_API))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.JAR))
                 attributeProvider(
                     TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
                     ext.version.map { it.majorVersion.toInt() },
@@ -121,10 +120,10 @@ class JavaPlugin @Inject constructor(
         val apiClasses = configurations.consumable("apiClasses") {
             extendsFrom(api.get())
             attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.LIBRARY))
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_API))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, attr(LibraryElements.CLASSES))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_API))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.CLASSES))
                 attributeProvider(
                     TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
                     ext.version.map { it.majorVersion.toInt() },
@@ -136,10 +135,10 @@ class JavaPlugin @Inject constructor(
         val runtimeElements = configurations.consumable("runtimeElements") {
             extendsFrom(implementation.get())
             attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.LIBRARY))
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_RUNTIME))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, attr(LibraryElements.JAR))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.JAR))
                 attributeProvider(
                     TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
                     ext.version.map { it.majorVersion.toInt() },
@@ -151,10 +150,10 @@ class JavaPlugin @Inject constructor(
         val runtimeClasses = configurations.consumable("runtimeClasses") {
             extendsFrom(implementation.get())
             attributes {
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.LIBRARY))
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_RUNTIME))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, attr(LibraryElements.CLASSES))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.CLASSES))
                 attributeProvider(
                     TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE,
                     ext.version.map { it.majorVersion.toInt() },

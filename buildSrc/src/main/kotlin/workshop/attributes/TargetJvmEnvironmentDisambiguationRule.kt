@@ -11,7 +11,7 @@ class TargetJvmEnvironmentDisambiguationRule : AttributeDisambiguationRule<Targe
             details.closestMatch(consumerValue)
         } else {
             val standardJvm = details.candidateValues.firstOrNull {
-                TargetJvmEnvironment.STANDARD_JVM == it.name
+                it.name == TargetJvmEnvironment.STANDARD_JVM
             }
             if (standardJvm != null) {
                 details.closestMatch(standardJvm)

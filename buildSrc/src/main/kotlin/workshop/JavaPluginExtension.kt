@@ -12,7 +12,7 @@ import org.gradle.api.plugins.BasePlugin.BUILD_GROUP
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.get
-import workshop.attributes.attr
+import org.gradle.kotlin.dsl.named
 import javax.inject.Inject
 
 abstract class JavaPluginExtension {
@@ -31,10 +31,10 @@ abstract class JavaPluginExtension {
         }
         val sourceElements = configurations.consumable("sourceElements") {
             attributes {
-                attribute(Usage.USAGE_ATTRIBUTE, attr(Usage.JAVA_RUNTIME))
-                attribute(Category.CATEGORY_ATTRIBUTE, attr(Category.DOCUMENTATION))
-                attribute(Bundling.BUNDLING_ATTRIBUTE, attr(Bundling.EXTERNAL))
-                attribute(DocsType.DOCS_TYPE_ATTRIBUTE, attr(DocsType.SOURCES))
+                attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
+                attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
+                attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
+                attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType.SOURCES))
             }
             outgoing.artifact(sourcesJarTask)
         }
