@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api("org.springframework.boot:spring-boot-gradle-plugin:3.2.3")
+    api("org.springframework.boot:spring-boot-gradle-plugin:3.2.4")
 }
 
 gradlePlugin {
