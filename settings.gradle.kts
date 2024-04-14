@@ -5,3 +5,9 @@ include(
     "producer",
     "spring-app",
 )
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}

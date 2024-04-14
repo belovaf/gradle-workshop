@@ -35,6 +35,10 @@
 #### Steps
 - Included builds, buildSrc
 
+- Repositories
+  - dependencyResolutionManagement
+  - pluginManagement
+
 - Base plugin
   - lifecycle tasks (clean, check, assemble, build)
   - explicit task dependencies
