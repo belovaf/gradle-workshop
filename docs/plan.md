@@ -40,6 +40,7 @@
   - explicit task dependencies
 
 - Compilation without dependencies, build jar, run
+  - [diagram](images/task-inputs-outputs.png)
   - configuration avoidance API (lazy configuration)
   - task inputs / outputs
   - property, provider
