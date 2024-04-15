@@ -19,6 +19,7 @@
 ### Java Plugin
 
 #### Requirements
+- lifecycle tasks (clean, check, assemble, build)
 - compilation
 - packaging to jar
 - customizations:
@@ -27,6 +28,7 @@
   - additional compiler arguments
 - consume dependencies, implementation scope
 - produce artifacts (other projects can consume our project as dependency)
+- publish artifacts
 - transitive compile dependencies, api scope
 - produce sources jar
 - optimization: do not build jar when not needed
@@ -46,17 +48,25 @@
 - Compilation without dependencies, build jar, run
   - [diagram](images/task-inputs-outputs.png)
   - configuration avoidance API (lazy configuration)
+  - incremental builds
+    - do not call clean task
+  - caches:
+    - task
+    - build
+    - configuration
   - task inputs / outputs
-  - property, provider
-  - implicit / explicit task dependencies
-  - caches
-  - incremental builds, do not call clean
+    - Property, Provider
+    - input normalization (preview)
+      - PathSensitive
+  - task dependencies
+    - implicit / explicit
 
 - Java extension
   - extension DSL
+  - convention
   - language version
 
-- Consume artifacts, implementation, classpath
+- Configurations
   - (Configurable)FileCollection
   - (Configurable)FileTree
   - [file collection vs file tree diagram](images/file-collection-vs-file-tree.png)
@@ -64,18 +74,32 @@
   - input normalization
     - PathSensitive
     - Classpath
+    - CompileClasspath
     - content normalization, ABI, jar normalization
     - filtering, build-info.properties
-  - [java library plugin configurations](images/java-library-plugin-configurations.png)
+  - [java plugin configurations](images/java-plugin-configurations.png)
 
-- Produce artifacts, runtimeElements
+- Consume artifacts
+  - implementation
+  - compileClasspath
+  - runtimeClasspath
+  - use apache commons text
+  - runMain task
+
+- Component model
   - [maven component model](images/component-model-maven.png)
   - [gradle component model](images/component-model-gradle.png)
   - components
   - outgoingVariants
   - attributes
 
-- JavaLibraryPlugin: api, compileClasspath, runtimeClasspath, apiElements
+- Produce artifacts
+  - runtimeElements
+  - use producer from consumer
+
+- JavaLibraryPlugin:
+- [java library plugin configurations](images/java-library-plugin-configurations.png)
+  - api, compileClasspath, runtimeClasspath, apiElements
   - transitive dependencies: separate compile and runtime
   - compare with maven
 
