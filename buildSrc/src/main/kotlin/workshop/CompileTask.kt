@@ -5,6 +5,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.ProjectLayout
+import org.gradle.api.internal.file.FileOperations
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
@@ -40,7 +41,10 @@ abstract class CompileTask : DefaultTask() {
     protected abstract val layout: ProjectLayout
 
     @get:Inject
-    protected abstract val exec: ExecOperations
+    protected abstract val execOperations: ExecOperations
+
+    @get:Inject
+    protected abstract val fileOperations: FileOperations
 
     init {
         group = "build"
@@ -48,7 +52,9 @@ abstract class CompileTask : DefaultTask() {
 
     @TaskAction
     fun exec() {
-        val result = exec.exec {
+        fileOperations.delete(classesDir)
+
+        val result = execOperations.exec {
             executable("javac")
 
             args(compilerArgs.get())

@@ -99,7 +99,7 @@ class JavaPlugin @Inject constructor(
         }
 
         tasks.register<JavaExec>("runMain") {
-            classpath(compileTask.map { it.classesDir.asFile }, runtimeClasspath)
+            classpath(compileTask, runtimeClasspath)
         }
 
         val apiElements = configurations.consumable("apiElements") {
