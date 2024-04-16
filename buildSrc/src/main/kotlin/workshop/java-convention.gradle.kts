@@ -21,14 +21,14 @@ publishing {
         create<MavenPublication>("java") {
             from(components["java"])
             versionMapping {
-                usage(Usage.JAVA_RUNTIME) {
+                allVariants {
                     fromResolutionResult()
                 }
             }
         }
         repositories {
-            maven(rootProject.layout.projectDirectory.dir(".repository").asFile.absoluteFile) {
-                name = "workshop-repo"
+            maven(rootProject.layout.projectDirectory.dir(".repository").asFile) {
+                name = "workshopRepo"
             }
         }
     }
