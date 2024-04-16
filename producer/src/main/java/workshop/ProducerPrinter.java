@@ -5,7 +5,8 @@ import org.apache.commons.text.CaseUtils;
 
 public class ProducerPrinter {
     public static void printMessage() {
-        System.out.println(Strings.repeat("p ", 10));
-        System.out.println(CaseUtils.toCamelCase("producer", true));
+        System.out.println("ProducerSimple");
+        System.out.println(CaseUtils.toCamelCase("producer apache", true));
+        System.out.println(Strings.repeat("ProducerGuava ", 3));
     }
 }

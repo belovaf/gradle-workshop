@@ -108,8 +108,12 @@
 - Advanced produce artifacts
   - sources jar variant
   - classes variant
-  - AttributeCompatibilityRule for java version and library elements
+  - AttributeCompatibilityRule for java version
+    - build-time incompatible java version error
+  - AttributeCompatibilityRule for library elements
+    - skip jar creation on run
   - AttributeDisambiguationRule for target jvm environment
+    - variant selection error for guava
 
 - Shared build services
   - timestamp build service
