@@ -113,6 +113,8 @@
 
 - Shared build services
   - timestamp build service
+  - write timestamp to manifest
+  - write timestamp to spring boot build-info.properties
 
 ### Java Convention Plugin
 
