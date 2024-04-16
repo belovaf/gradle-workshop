@@ -8,6 +8,10 @@ dependencies {
 
 gradlePlugin {
     plugins {
+        create("build-timestamp") {
+            id = "workshop.build-timestamp"
+            implementationClass = "workshop.BuildTimestampPlugin"
+        }
         create("java") {
             id = "workshop.java"
             implementationClass = "workshop.JavaPlugin"

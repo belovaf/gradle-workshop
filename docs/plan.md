@@ -79,6 +79,8 @@
     - filtering, build-info.properties
   - [java plugin configurations](images/java-plugin-configurations.png)
 
+#### Перерыв
+
 - Consume artifacts
   - implementation
   - compileClasspath

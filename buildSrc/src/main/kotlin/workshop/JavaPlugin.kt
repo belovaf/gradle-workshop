@@ -21,12 +21,8 @@ class JavaPlugin @Inject constructor(
     private val softwareComponentFactory: SoftwareComponentFactory
 ) : Plugin<Project> {
 
-    override fun apply(project: Project) = project.run {
+    override fun apply(project: Project): Unit = project.run {
         apply(plugin = "base")
-
-        val timestampService = gradle.sharedServices.registerIfAbsent("timestamp", TimestampBuildService::class) {
-            parameters.format.set("yyyy-MM-dd HH:mm:ss")
-        }
 
         val ext = extensions.create<JavaPluginExtension>("java")
 
@@ -86,12 +82,8 @@ class JavaPlugin @Inject constructor(
         }
 
         val jarTask = tasks.register<Jar>("jar") {
-            from(compileTask.map { it.classesDir })
+            from(compileTask)
             destinationDirectory.set(layout.buildDirectory.dir("libs"))
-            usesService(timestampService)
-            manifest {
-                attributes["Timestamp"] = timestampService.get().timestampString
-            }
         }
 
         tasks.named("assemble") {
@@ -169,6 +161,5 @@ class JavaPlugin @Inject constructor(
             addVariantsFromConfiguration(runtimeClasses.get()) { skip() }
         }
         components.add(javaComponent)
-        Unit
     }
 }

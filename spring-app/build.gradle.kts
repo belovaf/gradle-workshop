@@ -3,6 +3,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 plugins {
     java
     workshop.`spring-boot`
+    workshop.`build-timestamp`
 }
 
 dependencies {

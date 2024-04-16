@@ -10,7 +10,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 class SpringBootExtendedPlugin : Plugin<Project> {
-    override fun apply(target: Project) = target.run {
+    override fun apply(target: Project): Unit = target.run {
         apply(plugin = "org.springframework.boot")
 
         plugins.withId("java") {
@@ -35,7 +35,5 @@ class SpringBootExtendedPlugin : Plugin<Project> {
                 classpath(productionOnlyPath)
             }
         }
-
-        Unit
     }
 }
