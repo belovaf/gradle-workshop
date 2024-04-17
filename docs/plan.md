@@ -75,8 +75,6 @@
     - PathSensitive
     - Classpath
     - CompileClasspath
-    - content normalization, ABI, jar normalization
-    - filtering, build-info.properties
   - [java plugin configurations](images/java-plugin-configurations.png)
 
 #### Перерыв
@@ -141,6 +139,8 @@
 - productionOnly dependency scope
 
 #### Steps
+- content normalization:
+  - filtering, build-info.properties
 
 - build script dependency
 - spring boot plugin productionRuntimeClasspath
